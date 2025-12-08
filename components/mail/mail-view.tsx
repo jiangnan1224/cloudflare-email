@@ -98,22 +98,15 @@ export function MailView({ mail, onClose }: MailViewProps) {
               {mail.message ? (
                 <div className="relative">
                   <div
-                    className="email-content [&>*]:leading-normal [&>*]:my-4 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0
+                    className="[&>*]:leading-normal [&>*]:my-4 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0
                                [&_a]:text-primary [&_a]:underline-offset-4 [&_a:hover]:underline
-                               [&_img]:!max-w-full [&_img]:!w-auto [&_img]:!h-auto [&_img]:object-contain
-                               [&_table]:!w-full [&_table]:!max-w-full [&_table]:!table-auto [&_table]:border-collapse
-                               [&_td]:!max-w-full [&_td]:p-2 [&_td]:break-words
-                               [&_th]:!max-w-full [&_th]:p-2 [&_th]:break-words
-                               [&_div]:!max-w-full [&_div]:break-words
-                               [&_pre]:bg-slate-50 [&_pre]:p-4 [&_pre]:rounded-lg [&_pre]:overflow-x-auto [&_pre]:max-w-full
+                               [&_img]:max-w-full [&_img]:h-auto
+                               [&_table]:w-full [&_table]:border-collapse [&_td]:p-2 [&_th]:p-2
+                               [&_pre]:bg-slate-50 [&_pre]:p-4 [&_pre]:rounded-lg [&_pre]:overflow-x-auto
                                [&_blockquote]:border-l-4 [&_blockquote]:border-blue-200 [&_blockquote]:pl-4 [&_blockquote]:text-slate-600
                                [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6
-                               [&>p]:break-words [&>div]:break-words
-                               max-w-full break-words overflow-hidden"
-                    style={{
-                      wordBreak: 'break-word',
-                      overflowWrap: 'break-word'
-                    }}
+                               [&_*]:break-words [&_pre]:whitespace-pre-wrap
+                               overflow-x-auto"
                     dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
                   />
                 </div>
