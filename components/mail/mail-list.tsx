@@ -21,6 +21,55 @@ interface MailListProps {
   onLoadMore: () => void
 }
 
+// 根据字符串生成一致的颜色
+function getAvatarColor(str: string): { bg: string; text: string } {
+  const colors = [
+    { bg: 'bg-gradient-to-br from-blue-400 to-blue-600', text: 'text-white' },
+    { bg: 'bg-gradient-to-br from-purple-400 to-purple-600', text: 'text-white' },
+    { bg: 'bg-gradient-to-br from-pink-400 to-pink-600', text: 'text-white' },
+    { bg: 'bg-gradient-to-br from-green-400 to-green-600', text: 'text-white' },
+    { bg: 'bg-gradient-to-br from-yellow-400 to-yellow-600', text: 'text-white' },
+    { bg: 'bg-gradient-to-br from-red-400 to-red-600', text: 'text-white' },
+    { bg: 'bg-gradient-to-br from-indigo-400 to-indigo-600', text: 'text-white' },
+    { bg: 'bg-gradient-to-br from-teal-400 to-teal-600', text: 'text-white' },
+    { bg: 'bg-gradient-to-br from-orange-400 to-orange-600', text: 'text-white' },
+    { bg: 'bg-gradient-to-br from-cyan-400 to-cyan-600', text: 'text-white' },
+  ]
+
+  let hash = 0
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash)
+  }
+
+  return colors[Math.abs(hash) % colors.length]
+}
+
+// 获取头像显示文字
+function getAvatarText(mail: Mail): string {
+  // 优先使用 source（发件人名称）
+  if (mail.source) {
+    // 如果是中文，取前两个字
+    if (/[\u4e00-\u9fa5]/.test(mail.source)) {
+      return mail.source.slice(0, 2)
+    }
+    // 如果是英文，取前两个字母
+    const words = mail.source.trim().split(/\s+/)
+    if (words.length >= 2) {
+      return (words[0][0] + words[1][0]).toUpperCase()
+    }
+    return mail.source.slice(0, 2).toUpperCase()
+  }
+
+  // 其次使用 from（邮箱地址）
+  if (mail.from) {
+    // 提取邮箱用户名部分
+    const username = mail.from.split('@')[0]
+    return username.slice(0, 2).toUpperCase()
+  }
+
+  return 'UN'
+}
+
 export function MailList({ mails: initialMails, hasMore, loadingMore, onLoadMore }: MailListProps) {
   const { currentAddress } = useAddressStore()
   const { query } = useSearchStore()
@@ -118,7 +167,7 @@ export function MailList({ mails: initialMails, hasMore, loadingMore, onLoadMore
   }
 
   return (
-    <div className="flex h-full gap-6">
+    <div className="flex h-full gap-6 pt-2">
       {/* 邮件列表 */}
       <motion.div
         className={cn(
@@ -160,10 +209,15 @@ export function MailList({ mails: initialMails, hasMore, loadingMore, onLoadMore
                         )}
                       >
                         <div className={cn(
-                          "w-10 h-10 rounded-full flex items-center justify-center shrink-0 text-lg font-medium mt-1",
-                          selectedMail?.id === mail.id ? "bg-blue-100 text-blue-600" : "bg-slate-100 text-slate-600"
+                          "w-10 h-10 rounded-full flex items-center justify-center shrink-0 text-sm font-semibold mt-1 shadow-sm",
+                          selectedMail?.id === mail.id
+                            ? "bg-blue-500 text-white scale-105"
+                            : getAvatarColor(mail.from || mail.source || '').bg,
+                          selectedMail?.id === mail.id
+                            ? ""
+                            : getAvatarColor(mail.from || mail.source || '').text
                         )}>
-                          {(mail.from?.[0] || 'U').toUpperCase()}
+                          {getAvatarText(mail)}
                         </div>
 
                         <div className="flex-1 min-w-0 space-y-1">

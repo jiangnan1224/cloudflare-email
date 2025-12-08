@@ -57,7 +57,7 @@ export function SidebarNav({ onMobileClose }: SidebarNavProps) {
       {/* <Separator className="mb-2" /> */}
 
       {/* 写邮件按钮 - completely re-styled */}
-      <div className="px-3 py-4">
+      <div className=" py-4">
         <Button
           className="w-full justify-start gap-3 rounded-xl h-12 bg-primary hover:bg-primary/90 text-white shadow-md shadow-blue-500/20"
           onClick={() => setView('compose')}
@@ -67,7 +67,7 @@ export function SidebarNav({ onMobileClose }: SidebarNavProps) {
         </Button>
       </div>
 
-      <nav className="flex-1 px-3 space-y-1 overflow-y-auto">
+      <nav className="flex-1 space-y-1 overflow-y-auto">
         {navItems.map((item) => {
           const isActive = view === item.id
           return (
@@ -119,7 +119,7 @@ export function SidebarNav({ onMobileClose }: SidebarNavProps) {
         </div>
       </nav>
 
-      <div className="px-3 py-4 border-t border-slate-100 mt-auto">
+      <div className=" py-4 border-t border-slate-100 mt-auto">
         <Button
           variant="ghost"
           className="w-full justify-start gap-3 h-12 rounded-xl font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900"

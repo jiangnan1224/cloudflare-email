@@ -50,7 +50,7 @@ export function Sidebar({ showHeader }: SidebarProps) {
       {/* 导航菜单和设置按钮的容器 */}
       <div className="flex flex-col flex-1 overflow-hidden">
         {/* 导航菜单（可滚动区域） */}
-        <div className="flex-1 overflow-y-auto px-4">
+        <div className="flex-1 overflow-y-auto px-2">
           <SidebarNav onMobileClose={toggle} />
         </div>
       </div>
